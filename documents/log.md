@@ -7,5 +7,11 @@ Time:00:22
 
 **NEXT:**实现Dribbble授权验证  
 ***  
+Date:2015-07-23  
+Time:23:55
 
+已经实现OAuth。
+
+**NEXT:**实现LoginActivity，需要具有medium应用的样式。
+***
 

@@ -20,6 +20,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.1.1'
+    compile files('/Users/zhanglei/AndroidStudioProjects/Watch/libs/gson-2.3.1.jar')
+    compile 'com.mcxiaoke.volley:library:1.0.17'
 }
