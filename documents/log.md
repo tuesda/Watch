@@ -14,4 +14,11 @@ Time:23:55
 
 **NEXT:**实现LoginActivity，需要具有medium应用的样式。
 ***
+Date:2015-07-25  
+Time:19:34  
+
+已经实现LoginActivity。  
+
+**NEXT:**实现主页面，即浏览页面---HomeActivity
+***  
 
