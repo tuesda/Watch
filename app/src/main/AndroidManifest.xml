@@ -19,7 +19,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.LoginActivity"
+            />
+        <activity android:name=".activities.UserInfoActivity" />
+        <activity android:name=".activities.WithActionBarActivity"
+            />
     </application>
 
 </manifest>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="red">#ffff0000</color>
+    <color name="toolbar_back">#fffafafa</color>
+    <color name="main_back">#ffeeeeee</color>
+    <color name="default_font">#ff000000</color>
+</resources>

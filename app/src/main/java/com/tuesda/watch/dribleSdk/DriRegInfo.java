@@ -7,7 +7,8 @@ import java.util.Random;
  */
 public class DriRegInfo {
 
-    public static final String DRIBLE_TOKEN_FIELD = "com.tuesda.watch.access.taken";
+    public static final String DRIBLE_MEM = "com.tuesda.watch.drible.mem";
+    public static final String DRIBLE_TOKEN_FIELD = "com.tuesda.watch.dirbbble.token";
 
     public static final String DRIBLE_CODE_FIELD = "com.tuesda.watch.dribbble.code";
 

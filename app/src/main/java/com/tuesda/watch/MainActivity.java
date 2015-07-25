@@ -1,7 +1,9 @@
 package com.tuesda.watch;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,9 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 
 import com.tuesda.watch.activities.LoginActivity;
+import com.tuesda.watch.activities.UserInfoActivity;
+import com.tuesda.watch.activities.WithActionBarActivity;
+import com.tuesda.watch.dribleSdk.DriRegInfo;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -20,6 +25,8 @@ import java.net.URLEncoder;
 
 public class MainActivity extends Activity {
     private Button mLoginBtn;
+    private Button mGetUser;
+    private Button mGoAction;
 
 
 
@@ -29,14 +36,40 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mLoginBtn = (Button) findViewById(R.id.btn_login);
+        mGetUser = (Button) findViewById(R.id.get_user);
+        mGoAction = (Button) findViewById(R.id.to_action);
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //clearSharedPref();
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
 
+        mGetUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+        mGoAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, WithActionBarActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    private void clearSharedPref() {
+        SharedPreferences sharedPreferences = getSharedPreferences(DriRegInfo.DRIBLE_MEM, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(DriRegInfo.DRIBLE_CODE_FIELD, "");
+        editor.putString(DriRegInfo.DRIBLE_TOKEN_FIELD, "");
+        editor.commit();
     }
 
 

@@ -5,8 +5,19 @@
     <Button
         android:id="@+id/btn_login"
         android:text="Login"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:layout_below="@id/btn_login"
+        android:id="@+id/get_user"
+        android:text="User Info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/to_action"
+        android:layout_below="@id/get_user"
+        android:text="actionbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
 </RelativeLayout>

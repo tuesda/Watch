@@ -1,15 +1,16 @@
 package com.tuesda.watch.activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,6 +21,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.tuesda.watch.R;
 import com.tuesda.watch.dribleSdk.DriRegInfo;
+import com.tuesda.watch.log.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,13 +30,14 @@ import org.json.JSONObject;
  * Created by zhanglei on 15/7/23.
  */
 public class LoginActivity extends Activity {
-    private static final String TAG = "LoginActivity";
 
     private WebView mLoginWeb;
     private String mReturnCode;
-    private String accessToken;
+
+    private SharedPreferences mDribleShare;
 
     private ProgressBar mProgress;
+    private RelativeLayout mNavBack;
 
     RequestQueue mQueue;
 
@@ -42,15 +45,39 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        initView();
+        setupWeb();
 
-        mQueue = Volley.newRequestQueue(this);
 
+
+
+
+    }
+
+    private void initView() {
         mLoginWeb = (WebView) findViewById(R.id.login_web);
+        mLoginWeb.clearCache(true);
         mProgress = (ProgressBar) findViewById(R.id.login_progress);
         mProgress.setVisibility(View.INVISIBLE);
+        mNavBack = (RelativeLayout) findViewById(R.id.nav_back);
+        mNavBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    private void setupWeb() {
+        mQueue = Volley.newRequestQueue(this);
+        mDribleShare = getSharedPreferences(DriRegInfo.DRIBLE_MEM, Context.MODE_PRIVATE);
 
 
-        if (mReturnCode == null) {
+
+        mReturnCode = mDribleShare.getString(DriRegInfo.DRIBLE_CODE_FIELD, null);
+
+
+        if (TextUtils.isEmpty(mReturnCode)) {
             mProgress.setVisibility(View.VISIBLE);
             mLoginWeb.setWebViewClient(new WebViewClient() {
                 @Override
@@ -59,12 +86,15 @@ public class LoginActivity extends Activity {
                         if (url.indexOf("code=")!=-1) {
                             // save the code str
                             mReturnCode = getCodeFromUrl(url);
+                            SharedPreferences.Editor editor = mDribleShare.edit();
+                            editor.putString(DriRegInfo.DRIBLE_CODE_FIELD, mReturnCode);
+                            editor.commit();
                         }
 
                         if (!TextUtils.isEmpty(mReturnCode)) {
                             requestForAccessToken();
                         } else {
-                            Log.i(TAG, "code returned is empty");
+                            Log.i("code returned is empty");
                         }
 
                         //finish(); // return last acitivty
@@ -82,21 +112,18 @@ public class LoginActivity extends Activity {
             });
 
             mLoginWeb.loadUrl(DriRegInfo.DRIBLE_LOGIN_URL);
-            Log.i(TAG, DriRegInfo.DRIBLE_LOGIN_URL);
+            Log.i(DriRegInfo.DRIBLE_LOGIN_URL);
         } else {
             Toast.makeText(LoginActivity.this, "code have already exists", Toast.LENGTH_LONG).show();
-            //finish();
+            finish();
         }
-
-
-
     }
 
     private String getCodeFromUrl(String url) {
         int startIndex = url.indexOf("code=") + "code=".length();
         int endIndex = url.indexOf("&state");
         String code = url.substring(startIndex, endIndex);
-        Log.i(TAG, "code=" + code);
+        Log.i("code=" + code);
         return code;
     }
 
@@ -115,14 +142,24 @@ public class LoginActivity extends Activity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i(TAG, response.toString());
+                        Log.i(response.toString());
+                        try {
+                            String accessToken = (String) response.get("access_token");
+                            SharedPreferences.Editor editor = mDribleShare.edit();
+                            editor.putString(DriRegInfo.DRIBLE_TOKEN_FIELD, accessToken);
+                            editor.commit();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Toast.makeText(LoginActivity.this, "Authorization success", Toast.LENGTH_LONG).show();
+
                         finish();
                     }
                 },
                 new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i(TAG, "error occurs: " + error.getCause());
+                Log.i("error occurs: " + error.getCause());
                 finish();
             }
         });

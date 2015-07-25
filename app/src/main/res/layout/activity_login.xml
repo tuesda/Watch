@@ -1,16 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/main_back"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/nav"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/toolbar_back"
+        >
+        <RelativeLayout
+            android:id="@+id/nav_back"
+            android:clickable="true"
+            android:background="@drawable/btn_back"
+            android:layout_width="@dimen/toolbar_height"
+            android:layout_height="@dimen/toolbar_height">
+            <ImageView
+                android:layout_centerInParent="true"
+                android:src="@drawable/left_arrow"
+                android:layout_width="@dimen/nav_icon_w_h"
+                android:layout_height="@dimen/nav_icon_w_h" />
+        </RelativeLayout>
+        <TextView
+            android:layout_marginLeft="@dimen/nav_margin_left"
+            android:layout_toRightOf="@id/nav_back"
+            android:layout_centerVertical="true"
+            android:text="@string/title_authorization"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
     <WebView
+        android:layout_below="@id/nav"
         android:id="@+id/login_web"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></WebView>
     <ProgressBar
         android:id="@+id/login_progress"
         android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="@dimen/progress_w_h"
+        android:layout_height="@dimen/progress_w_h" />
+
 
 </RelativeLayout>
