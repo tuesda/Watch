@@ -5,4 +5,10 @@
     <string name="action_settings">Settings</string>
 
     <string name="title_authorization">User Authorization</string>
+    <string name="dribbble_name">Dribbble</string>
+
+    <!--Navbar bottom -->
+    <string name="nav_bottom_l">Top Shots</string>
+    <string name="nav_bottom_m">Latest</string>
+    <string name="nav_bottom_r">Animation</string>
 </resources>

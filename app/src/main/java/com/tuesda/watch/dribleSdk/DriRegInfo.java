@@ -1,5 +1,6 @@
 package com.tuesda.watch.dribleSdk;
 
+import java.text.SimpleDateFormat;
 import java.util.Random;
 
 /**
@@ -32,6 +33,50 @@ public class DriRegInfo {
                             "&redirect_uri=" + DRIBLE_CALL_BACK +
                             "&scope=" + "public write comment upload" +
                             "&state=" + mState;
+
+    public static final String REQUEST_HEAD_AUTH_FIELD = "Authorization";
+    public static final String REQUEST_HEAD_BEAR = " Bearer ";
+
+    public static final String REQUEST_USER_URL = "https://api.dribbble.com/v1/users/";
+    public static final String REQUEST_ONE_SHOT_URL = "https://api.dribbble.com/v1/shots/";
+
+    public static final String INTENT_USER_ID = "com.tuesda.watch.intent.user.id";
+    public static final String INTENT_SHOT_ID = "com.tuesda.watch.intent.shot.id";
+
+    public static final String DRIBLE_DATE_FORMAT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+    public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat(DRIBLE_DATE_FORMAT_PATTERN);
+
+
+    /**
+     * Following is about shots set
+     */
+    public static final String REQUEST_SHOTS_FIELD_LIST = "list",
+                                REQUEST_LIST_ANIMATED = "animated",
+                                REQEUST_LIST_ATTACHMENTS = "attachments",
+                                REQUEST_LIST_DEBUTS = "debuts",
+                                REQUEST_LIST_PLAYOFFS = "playoffs",
+                                REQUEST_LIST_REBOUNDS = "rebounds",
+                                REQUEST_LIST_TEAMS = "teams";
+    public static final String REQUEST_SHOTS_FIELD_TIMEFRAME = "timeframe",
+                                REQUEST_TIMEFRAME_WEEK = "week",
+                                REQUEST_TIMEFRAME_MONTH = "month",
+                                REQUEST_TIMEFRAME_YEAR = "year",
+                                REQUEST_TIMEFRAME_EVER = "ever";
+
+    // Limit the timeframe to a specific date, week, month, or year. Must be in the format of YYYY-MM-DD.
+    public static final String REQUEST_SHOTS_FIELD_DATE = "date";
+
+    public static final String REQUEST_SHOTS_FIELD_SORT = "sort",
+                                REQUEST_SORT_COMMENTS = "comments",
+                                REQUEST_SORT_RECENT = "recent",
+                                REQUEST_SORT_VIEWS = "views";
+
+
+    /**
+     * Response header info
+     */
+    public static final String RESPONSE_HEADER_LINK = "Link";
+
 
 
 }

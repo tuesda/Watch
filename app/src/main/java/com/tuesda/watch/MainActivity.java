@@ -14,7 +14,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 
+import com.tuesda.watch.activities.HomeActivity;
 import com.tuesda.watch.activities.LoginActivity;
+import com.tuesda.watch.activities.OneShotInListActivity;
 import com.tuesda.watch.activities.UserInfoActivity;
 import com.tuesda.watch.activities.WithActionBarActivity;
 import com.tuesda.watch.dribleSdk.DriRegInfo;
@@ -27,6 +29,8 @@ public class MainActivity extends Activity {
     private Button mLoginBtn;
     private Button mGetUser;
     private Button mGoAction;
+    private Button mGoHome;
+    private Button mGoOneShot;
 
 
 
@@ -38,6 +42,8 @@ public class MainActivity extends Activity {
         mLoginBtn = (Button) findViewById(R.id.btn_login);
         mGetUser = (Button) findViewById(R.id.get_user);
         mGoAction = (Button) findViewById(R.id.to_action);
+        mGoHome = (Button) findViewById(R.id.to_home);
+        mGoOneShot = (Button) findViewById(R.id.to_one_shot);
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,6 +64,21 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, WithActionBarActivity.class);
+                startActivity(intent);
+            }
+        });
+        mGoHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mGoOneShot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, OneShotInListActivity.class);
                 startActivity(intent);
             }
         });

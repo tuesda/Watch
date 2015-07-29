@@ -24,4 +24,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile files('/Users/zhanglei/AndroidStudioProjects/Watch/libs/gson-2.3.1.jar')
     compile 'com.mcxiaoke.volley:library:1.0.17'
+    compile 'com.facebook.fresco:fresco:0.6.0+'
+    compile 'com.android.support:support-v4:22.1.1'
 }

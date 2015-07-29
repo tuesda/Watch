@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_back">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/home_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+
+    <RelativeLayout
+        android:id="@+id/nav"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/navbar_home_height"
+        android:background="@color/toolbar_back">
+
+        <RelativeLayout
+            android:id="@+id/home_nav_top"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height">
+
+            <RelativeLayout
+                android:id="@+id/nav_menu"
+                android:layout_width="@dimen/toolbar_height"
+                android:layout_height="@dimen/toolbar_height"
+                android:background="@drawable/btn_back"
+                android:clickable="true">
+
+                <ImageView
+                    android:layout_width="@dimen/nav_icon_w_h"
+                    android:layout_height="@dimen/nav_icon_w_h"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/menu" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/nav_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/nav_margin_left"
+                android:layout_toRightOf="@id/nav_menu"
+                android:fontFamily="sans-serif"
+                android:text="@string/dribbble_name"
+                android:textColor="@color/default_font"
+                android:textSize="@dimen/home_title_text_size"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/nav_search"
+                android:layout_width="@dimen/toolbar_height"
+                android:layout_height="@dimen/toolbar_height"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/btn_back"
+                android:clickable="true">
+
+                <ImageView
+                    android:layout_width="@dimen/nav_icon_w_h"
+                    android:layout_height="@dimen/nav_icon_w_h"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/search" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/home_nav_bottom"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_height="@dimen/navbar_bottom_height">
+            <RelativeLayout
+                android:id="@+id/nav_btn_l"
+                android:clickable="true"
+                android:background="@drawable/btn_back"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/nav_bottom_l"
+                    android:textSize="@dimen/nav_bottom_title_text"
+                    android:fontFamily="sans-serif-light"
+                    android:text="@string/nav_bottom_l"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/nav_btn_m"
+                android:clickable="true"
+                android:background="@drawable/btn_back"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/nav_bottom_m"
+                    android:textSize="@dimen/nav_bottom_title_text"
+                    android:fontFamily="sans-serif-light"
+                    android:text="@string/nav_bottom_m"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/nav_btn_r"
+                android:clickable="true"
+                android:background="@drawable/btn_back"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/nav_bottom_r"
+                    android:textSize="@dimen/nav_bottom_title_text"
+                    android:fontFamily="sans-serif-light"
+                    android:text="@string/nav_bottom_r"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+        </LinearLayout>
+        <View
+            android:id="@+id/home_pager_indicator"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/page_indicator"
+            android:layout_width="120dp"
+            android:layout_height="2dp" />
+    </RelativeLayout>
+
+</RelativeLayout>

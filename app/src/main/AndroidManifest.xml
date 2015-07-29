@@ -24,6 +24,8 @@
         <activity android:name=".activities.UserInfoActivity" />
         <activity android:name=".activities.WithActionBarActivity"
             />
+        <activity android:name=".activities.HomeActivity" />
+        <activity android:name=".activities.OneShotInListActivity" />
     </application>
 
 </manifest>

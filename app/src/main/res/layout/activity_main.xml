@@ -19,5 +19,17 @@
         android:text="actionbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/to_home"
+        android:text="Home Page"
+        android:layout_below="@id/to_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/to_one_shot"
+        android:text="One Shot"
+        android:layout_below="@id/to_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
