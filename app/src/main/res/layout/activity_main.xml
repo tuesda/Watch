@@ -31,5 +31,24 @@
         android:layout_below="@id/to_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/to_shot_detail"
+        android:text="Shot Detail"
+        android:layout_below="@id/to_one_shot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/to_input"
+        android:layout_below="@id/to_shot_detail"
+        android:text="Input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/to_users"
+        android:text="Users"
+        android:layout_below="@id/to_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

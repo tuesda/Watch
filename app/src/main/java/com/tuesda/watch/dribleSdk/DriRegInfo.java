@@ -38,6 +38,8 @@ public class DriRegInfo {
     public static final String REQUEST_HEAD_BEAR = " Bearer ";
 
     public static final String REQUEST_USER_URL = "https://api.dribbble.com/v1/users/";
+    public static final String REQUEST_MY_INFO = "https://api.dribbble.com/v1/user";
+
     public static final String REQUEST_ONE_SHOT_URL = "https://api.dribbble.com/v1/shots/";
 
     public static final String INTENT_USER_ID = "com.tuesda.watch.intent.user.id";
@@ -77,6 +79,20 @@ public class DriRegInfo {
      */
     public static final String RESPONSE_HEADER_LINK = "Link";
 
+
+    public static final String CHECK_IF_ME_FOLLOW_URL = "https://api.dribbble.com/v1/user/following/";
+
+
+
+    public static final String ACCOUNT_INFO_MEM = "com.tuesda.watch.account.mem";
+    public static final String ACCOUNT_USER_ID = "com.tuesda.watch.account.user.id";
+
+
+    public static final String FOLLOWER_URL_FLAG = "followers";
+    public static final String FOLLOWING_URL_FLAG = "following";
+
+    public static final String FOLLOWER_JSON_FLAG = "follower";
+    public static final String FOLLOWING_JSON_FLAG = "followee";
 
 
 }

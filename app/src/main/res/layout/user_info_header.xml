@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/content_back"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/header_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height" />
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/user_info_avatar"
+        app:roundAsCircle="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/header_header"
+        android:layout_centerHorizontal="true"
+        android:layout_width="@dimen/user_info_avatar_w_h"
+        android:layout_height="@dimen/user_info_avatar_w_h" />
+    <TextView
+        android:id="@+id/user_info_name"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/user_info_avatar"
+        android:textSize="26sp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold"
+        android:textColor="@color/default_font"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:id="@+id/user_info_detail_zone"
+        android:layout_below="@id/user_info_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/user_info_follower_zone"
+            android:clickable="true"
+            android:background="@drawable/btn_back"
+            android:layout_centerHorizontal="true"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/follower_indicator"
+                android:layout_marginTop="5dp"
+                android:textSize="12sp"
+                android:textColor="@color/grey_text"
+                android:layout_centerHorizontal="true"
+                android:text="Followers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/follower_count"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/default_font"
+                android:textSize="20sp"
+
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/follower_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/user_info_following_zone"
+            android:layout_toLeftOf="@id/user_info_follower_zone"
+            android:clickable="true"
+            android:background="@drawable/btn_back"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/following_indicator"
+                android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/grey_text"
+                android:textSize="12sp"
+                android:text="Following"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/following_count"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/default_font"
+                android:textSize="20sp"
+
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/following_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/user_info_else"
+            android:layout_toRightOf="@id/user_info_follower_zone"
+            android:clickable="true"
+            android:background="@drawable/btn_back"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/elsewhere_indicator"
+                android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/grey_text"
+                android:textSize="12sp"
+                android:text="Elsewhere"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_below="@id/elsewhere_indicator"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/earth"
+                android:layout_marginTop="10dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/user_info_bio"
+        android:layout_below="@id/user_info_detail_zone"
+        android:layout_marginBottom="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/user_info_bio_text"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/grey_text"
+            android:maxLines="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>

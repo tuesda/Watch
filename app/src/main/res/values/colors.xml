@@ -10,4 +10,7 @@
     <color name="image_placeholder">#ff313131</color>
     <color name="text_default_color">#ff737373</color>
     <color name="text_most_grey">#ffb5b5b5</color>
+    <color name="pretty_red">#fff24789</color>
+    <color name="grey_text">#ffb9b9b9</color>
+    <color name="left_menu_btn_pressed">#ffdddddd</color>
 </resources>

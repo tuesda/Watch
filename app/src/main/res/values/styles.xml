@@ -5,4 +5,8 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="input_editText_style" parent="android:Widget.EditText" >
+        <item name="android:background">@drawable/input_text_back</item>
+    </style>
+
 </resources>

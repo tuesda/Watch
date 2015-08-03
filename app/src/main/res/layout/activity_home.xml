@@ -1,130 +1,280 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/home_layout"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/main_back">
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/home_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+    android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/nav"
+        android:id="@+id/home_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/navbar_home_height"
-        android:background="@color/toolbar_back">
+        android:layout_height="match_parent"
+        android:background="@color/main_back">
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/home_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v4.view.ViewPager>
 
         <RelativeLayout
-            android:id="@+id/home_nav_top"
+            android:id="@+id/nav"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height">
+            android:layout_height="@dimen/navbar_home_height"
+            android:background="@color/toolbar_back">
 
             <RelativeLayout
-                android:id="@+id/nav_menu"
-                android:layout_width="@dimen/toolbar_height"
-                android:layout_height="@dimen/toolbar_height"
-                android:background="@drawable/btn_back"
-                android:clickable="true">
+                android:id="@+id/home_nav_top"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height">
 
-                <ImageView
-                    android:layout_width="@dimen/nav_icon_w_h"
-                    android:layout_height="@dimen/nav_icon_w_h"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/menu" />
+                <RelativeLayout
+                    android:id="@+id/nav_menu"
+                    android:layout_width="@dimen/toolbar_height"
+                    android:layout_height="@dimen/toolbar_height"
+                    android:background="@drawable/btn_back"
+                    android:clickable="true">
+
+                    <ImageView
+                        android:layout_width="@dimen/nav_icon_w_h"
+                        android:layout_height="@dimen/nav_icon_w_h"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/menu" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/nav_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/nav_margin_left"
+                    android:layout_toRightOf="@id/nav_menu"
+                    android:fontFamily="sans-serif"
+                    android:text="@string/dribbble_name"
+                    android:textColor="@color/default_font"
+                    android:textSize="@dimen/home_title_text_size"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:id="@+id/nav_search"
+                    android:layout_width="@dimen/toolbar_height"
+                    android:layout_height="@dimen/toolbar_height"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/btn_back"
+                    android:clickable="true">
+
+                    <ImageView
+                        android:layout_width="@dimen/nav_icon_w_h"
+                        android:layout_height="@dimen/nav_icon_w_h"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/search" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/home_nav_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/navbar_bottom_height"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/nav_btn_l"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_back"
+                    android:clickable="true">
+
+                    <TextView
+                        android:id="@+id/nav_bottom_l"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/nav_bottom_l"
+                        android:textSize="@dimen/nav_bottom_title_text" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/nav_btn_m"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_back"
+                    android:clickable="true">
+
+                    <TextView
+                        android:id="@+id/nav_bottom_m"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/nav_bottom_m"
+                        android:textSize="@dimen/nav_bottom_title_text" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/nav_btn_r"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_back"
+                    android:clickable="true">
+
+                    <TextView
+                        android:id="@+id/nav_bottom_r"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/nav_bottom_r"
+                        android:textSize="@dimen/nav_bottom_title_text" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/home_pager_indicator"
+                android:layout_width="120dp"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/page_indicator" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/left_drawer"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/main_back"
+        android:clickable="true"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/left_menu_user_zone"
+            android:paddingBottom="20dp"
+            android:background="@color/content_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/left_menu_avatar_zone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/left_menu_avatar_zone_height"
+                android:background="@color/content_back">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/left_menu_avatar_img"
+                    android:layout_width="@dimen/left_menu_avatar_w_h"
+                    android:layout_height="@dimen/left_menu_avatar_w_h"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/left_menu_padding_left"
+                    app:roundAsCircle="true" />
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/nav_title"
-                android:layout_width="wrap_content"
+                android:id="@+id/left_menu_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/nav_margin_left"
-                android:layout_toRightOf="@id/nav_menu"
-                android:fontFamily="sans-serif"
-                android:text="@string/dribbble_name"
-                android:textColor="@color/default_font"
-                android:textSize="@dimen/home_title_text_size"
-                android:textStyle="bold" />
+                android:background="@color/content_back"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="@dimen/left_menu_padding_left"
+                android:paddingTop="25dp"
+                android:textColor="@color/grey_text"
+                android:textSize="26sp" />
 
-            <RelativeLayout
-                android:id="@+id/nav_search"
-                android:layout_width="@dimen/toolbar_height"
-                android:layout_height="@dimen/toolbar_height"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/btn_back"
-                android:clickable="true">
-
-                <ImageView
-                    android:layout_width="@dimen/nav_icon_w_h"
-                    android:layout_height="@dimen/nav_icon_w_h"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/search" />
-            </RelativeLayout>
-        </RelativeLayout>
-        <LinearLayout
-            android:id="@+id/home_nav_bottom"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_height="@dimen/navbar_bottom_height">
-            <RelativeLayout
-                android:id="@+id/nav_btn_l"
-                android:clickable="true"
-                android:background="@drawable/btn_back"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/nav_bottom_l"
-                    android:textSize="@dimen/nav_bottom_title_text"
-                    android:fontFamily="sans-serif-light"
-                    android:text="@string/nav_bottom_l"
-                    android:layout_centerInParent="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/nav_btn_m"
-                android:clickable="true"
-                android:background="@drawable/btn_back"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/nav_bottom_m"
-                    android:textSize="@dimen/nav_bottom_title_text"
-                    android:fontFamily="sans-serif-light"
-                    android:text="@string/nav_bottom_m"
-                    android:layout_centerInParent="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/nav_btn_r"
-                android:clickable="true"
-                android:background="@drawable/btn_back"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/nav_bottom_r"
-                    android:textSize="@dimen/nav_bottom_title_text"
-                    android:fontFamily="sans-serif-light"
-                    android:text="@string/nav_bottom_r"
-                    android:layout_centerInParent="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </RelativeLayout>
-
+            <TextView
+                android:id="@+id/left_menu_see_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/content_back"
+                android:fontFamily="sans-serif-light"
+                android:paddingBottom="10dp"
+                android:paddingLeft="@dimen/left_menu_padding_left"
+                android:paddingTop="10dp"
+                android:text="See profile"
+                android:textColor="@color/grey_text"
+                android:textSize="16sp" />
         </LinearLayout>
-        <View
-            android:id="@+id/home_pager_indicator"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/page_indicator"
-            android:layout_width="120dp"
-            android:layout_height="2dp" />
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/left_menu_home"
+            android:layout_below="@id/left_menu_user_zone"
+            android:background="@drawable/menu_btn_back"
+            android:clickable="true"
+            android:text="Home"
+            android:textStyle="bold"
+            android:textColor="@color/default_font"
+            android:fontFamily="sans-serif-light"
+            android:textSize="24sp"
+            android:paddingLeft="@dimen/left_menu_padding_left"
+            android:paddingTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <!--<TextView-->
+            <!--android:id="@+id/left_menu_new"-->
+            <!--android:background="@drawable/menu_btn_back"-->
+            <!--android:clickable="true"-->
+            <!--android:text="New Shot"-->
+            <!--android:textStyle="bold"-->
+            <!--android:fontFamily="sans-serif-light"-->
+            <!--android:textColor="@color/grey_text"-->
+            <!--android:textSize="24sp"-->
+            <!--android:paddingLeft="@dimen/left_menu_padding_left"-->
+            <!--android:paddingTop="15dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
+        <TextView
+            android:id="@+id/left_menu_like"
+            android:layout_below="@id/left_menu_home"
+            android:background="@drawable/menu_btn_back"
+            android:clickable="true"
+            android:text="Liked Shots"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/grey_text"
+            android:textSize="24sp"
+            android:paddingLeft="@dimen/left_menu_padding_left"
+            android:paddingTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/left_menu_buckets"
+            android:layout_below="@id/left_menu_like"
+            android:background="@drawable/menu_btn_back"
+            android:clickable="true"
+            android:text="Buckets"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-light"
+            android:textSize="24sp"
+            android:paddingLeft="@dimen/left_menu_padding_left"
+            android:textColor="@color/grey_text"
+            android:paddingTop="15dp"
+            android:paddingBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-</RelativeLayout>
+
+        <TextView
+            android:id="@+id/left_menu_about"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/menu_btn_back"
+            android:clickable="true"
+            android:layout_gravity="bottom"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="@dimen/left_menu_padding_left"
+            android:text="Developer"
+            android:textColor="@color/grey_text"
+            android:fontFamily="sans-serif-light"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

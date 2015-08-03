@@ -6,7 +6,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/drible"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
@@ -26,6 +26,10 @@
             />
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.OneShotInListActivity" />
+        <activity android:name=".activities.ShotDetailActivity" />
+        <activity android:name=".activities.InputActivity" />
+        <activity android:name=".activities.UsersActivity" />
+
     </application>
 
 </manifest>

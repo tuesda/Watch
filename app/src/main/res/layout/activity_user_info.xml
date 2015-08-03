@@ -3,7 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/user_info_swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <ListView
+        android:id="@+id/user_info_list"
+        android:background="@color/main_back"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 
 
@@ -28,7 +38,57 @@
                 android:layout_width="@dimen/nav_icon_w_h"
                 android:layout_height="@dimen/nav_icon_w_h" />
         </RelativeLayout>
+        <TextView
+            android:id="@+id/user_info_nav_name"
+            android:layout_toRightOf="@id/nav_back"
+            android:layout_marginLeft="20dp"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:textColor="@color/default_font"
+            android:maxWidth="200dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
+        <RelativeLayout
+            android:id="@+id/nav_follow"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:clickable="true"
+            android:background="@drawable/btn_back"
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/nav_follow_text"
+
+                android:background="@drawable/unfollow_btn_back"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp"
+                android:text="Follow"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:textSize="12sp"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/progress_zone"
+        android:background="@color/main_back"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ProgressBar
+
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 

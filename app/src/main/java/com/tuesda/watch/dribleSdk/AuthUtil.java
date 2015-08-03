@@ -20,4 +20,10 @@ public class AuthUtil {
         }
         return access_token;
     }
+
+    public static int getMyId(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(DriRegInfo.ACCOUNT_INFO_MEM, Context.MODE_PRIVATE);
+        int id = sharedPreferences.getInt(DriRegInfo.ACCOUNT_USER_ID, -1);
+        return id;
+    }
 }

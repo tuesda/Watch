@@ -1,5 +1,6 @@
 package com.tuesda.watch.activities.homefragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -13,11 +14,14 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -28,6 +32,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.JsonArray;
 import com.tuesda.watch.R;
 import com.tuesda.watch.activities.HomeActivity;
+import com.tuesda.watch.activities.ShotDetailActivity;
 import com.tuesda.watch.activities.shotlistadapter.ShotListAdapter;
 import com.tuesda.watch.dribleSdk.AuthUtil;
 import com.tuesda.watch.dribleSdk.DriRegInfo;
@@ -55,6 +60,9 @@ public class HomeFragment extends Fragment {
     private SwipeRefreshLayout mRefreshLayout;
     private ListView mList;
     private View mHeader;
+    private RelativeLayout mFooter;
+    private ProgressBar mFootProgress;
+
     private ShotListAdapter mListAdapter;
     private ArrayList<DribleShot> mShotList;
 
@@ -71,6 +79,9 @@ public class HomeFragment extends Fragment {
     };
 
     private HashMap<String, String> mRelatedLinks;
+    private boolean mCanScroll = true;
+    private boolean mCanLoadMore = true;
+
 
 
 
@@ -91,14 +102,15 @@ public class HomeFragment extends Fragment {
             mHeader.setLayoutParams(params);
             mList.addHeaderView(mHeader);
 
-            RelativeLayout mFooter = (RelativeLayout) inflater.inflate(R.layout.home_list_footer, null, false);
+            mFooter = (RelativeLayout) inflater.inflate(R.layout.home_list_footer, null, false);
             AbsListView.LayoutParams footParams = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.home_footer_height));
             mFooter.setLayoutParams(footParams);
             mList.addFooterView(mFooter);
+            mFootProgress = (ProgressBar) mFooter.findViewById(R.id.footer_progress);
 
 
             mList.setDivider(null);
-            mList.setFriction(ViewConfiguration.getScrollFriction() * 0.7f);
+            mList.setFriction(ViewConfiguration.getScrollFriction() /** 0.7f*/);
 
 
             String url = genRequestUrl();
@@ -111,6 +123,8 @@ public class HomeFragment extends Fragment {
                     mRefreshLayout.setRefreshing(true);
                 }
             });
+
+
 
             mList.setOnScrollListener(new AbsListView.OnScrollListener() {
                 @Override
@@ -150,12 +164,13 @@ public class HomeFragment extends Fragment {
                     }
 
 
-                    if (onScrollListListener != null) {
+                    if (onScrollListListener != null && mCanScroll) {
                         onScrollListListener.onListScroll(scrollHeight - mLastScrollY);
                     }
                     mLastScrollY = scrollHeight;
                     if (firstVisibleItem+visibleItemCount == totalItemCount && !mList.canScrollVertically(1)
-                            && mList.getAdapter()!=null) {
+                            && mList.getAdapter()!=null && mCanLoadMore) {
+                        mCanLoadMore = false;
 //                        Toast.makeText(getActivity(), "foot comming! index: " + mIndex, Toast.LENGTH_LONG).show();
                         if (mRelatedLinks==null||
                                 TextUtils.isEmpty(mRelatedLinks.get("next"))) {
@@ -190,6 +205,9 @@ public class HomeFragment extends Fragment {
     }
 
 
+
+
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -212,8 +230,10 @@ public class HomeFragment extends Fragment {
         }
         final String accessToken = AuthUtil.getAccessToken(getActivity());
         if (TextUtils.isEmpty(accessToken)) {
+            mRefreshLayout.setRefreshing(false);
             return;
         }
+
 
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,
@@ -227,7 +247,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 mRefreshLayout.setRefreshing(false);
-                Toast.makeText(getActivity(), "errors", Toast.LENGTH_LONG).show();
+                if (getActivity()!=null) {
+                    Toast.makeText(getActivity(), "errors", Toast.LENGTH_LONG).show();
+                }
             }
         }
         ) {
@@ -241,30 +263,24 @@ public class HomeFragment extends Fragment {
 
             @Override
             protected Response<JSONArray> parseNetworkResponse(NetworkResponse response) {
+                Log.i("response headers: " + response.headers);
                 mRelatedLinks = genNextUrl(response.headers.get(DriRegInfo.RESPONSE_HEADER_LINK));
                 return super.parseNetworkResponse(response);
             }
+
+
         };
 
 
 
-        request.setRetryPolicy(new RetryPolicy() {
-            @Override
-            public int getCurrentTimeout() {
-                return 0;
-            }
+        request.setRetryPolicy(new DefaultRetryPolicy(10000, RETRY_COUNT, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-            @Override
-            public int getCurrentRetryCount() {
-                return RETRY_COUNT;
-            }
-
-            @Override
-            public void retry(VolleyError error) throws VolleyError {
-
-            }
-        });
+        request.setShouldCache(false);
         NetworkHandler.getInstance(getActivity()).addToRequestQueue(request);
+
+        if (!isFirst) {
+            mFootProgress.setVisibility(View.VISIBLE);
+        }
 
         new Handler().removeCallbacks(mTimeOut);
         new Handler().postDelayed(mTimeOut, 10000);
@@ -279,6 +295,21 @@ public class HomeFragment extends Fragment {
             if (mListAdapter==null) {
                 mListAdapter = new ShotListAdapter(getActivity(), mShotList);
                 mList.setAdapter(mListAdapter);
+                mList.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        resetList((int) (((HomeActivity) getActivity()).getCurNavTrans()));
+                    }
+                });
+                mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(getActivity(), ShotDetailActivity.class);
+                        intent.putExtra(ShotDetailActivity.SHOT_ID_EXTRA_FIELD, mShotList.get(position-1).getId());
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(0, 0);
+                    }
+                });
             }
             if (isFirst) {
                 mShotList.clear();
@@ -288,6 +319,8 @@ public class HomeFragment extends Fragment {
                 mShotList.add(shot);
             }
             mListAdapter.notifyDataSetChanged();
+            mCanLoadMore = true;
+            mFootProgress.setVisibility(View.INVISIBLE);
 
 
         } catch (Exception e) {
@@ -295,7 +328,11 @@ public class HomeFragment extends Fragment {
         }
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        mRefreshLayout.setRefreshing(false);
+    }
 
     private String genRequestUrl() {
         String url = DriRegInfo.REQUEST_ONE_SHOT_URL;
@@ -307,7 +344,8 @@ public class HomeFragment extends Fragment {
                 url += ("?" + DriRegInfo.REQUEST_SHOTS_FIELD_SORT + "=" + DriRegInfo.REQUEST_SORT_RECENT);
                 break;
             case 2:
-                url += ("?" + DriRegInfo.REQUEST_SHOTS_FIELD_LIST + "=" + DriRegInfo.REQUEST_LIST_ANIMATED);
+                url += ("?" + DriRegInfo.REQUEST_SHOTS_FIELD_LIST + "=" + DriRegInfo.REQUEST_LIST_ANIMATED
+                        + "&" + DriRegInfo.REQUEST_SHOTS_FIELD_SORT + "=" + DriRegInfo.REQUEST_SORT_RECENT);
                 break;
         }
         return url;
@@ -322,13 +360,21 @@ public class HomeFragment extends Fragment {
 
 
     public void resetList(final int trans) {
+        final int navBottom = (int) (getResources().getDimension(R.dimen.navbar_home_height) + trans);
         mList.post(new Runnable() {
             @Override
             public void run() {
                 if (mList.getFirstVisiblePosition()==0) {
                     if (mList.getChildAt(1)!=null) {
-                        mList.smoothScrollToPositionFromTop(1, (int) (getResources().getDimension(R.dimen.navbar_home_height) + trans),
-                                1);
+                        mCanScroll = false;
+                        mList.setSelectionFromTop(1, navBottom);
+
+                        mList.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                mCanScroll = true;
+                            }
+                        });
                     }
                 }
             }

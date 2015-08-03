@@ -1,28 +1,52 @@
 package com.tuesda.watch.activities;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.tuesda.watch.R;
 import com.tuesda.watch.activities.homefragments.FragmentAdapter;
 import com.tuesda.watch.activities.homefragments.HomeFragment;
+import com.tuesda.watch.dribleSdk.AuthUtil;
+import com.tuesda.watch.dribleSdk.DriRegInfo;
+import com.tuesda.watch.dribleSdk.data.DribleUser;
+import com.tuesda.watch.httpnetwork.NetworkHandler;
 import com.tuesda.watch.log.Log;
 
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhanglei on 15/7/25.
@@ -31,6 +55,7 @@ public class HomeActivity extends FragmentActivity {
 
 
     private RelativeLayout mNavBar;
+    private RelativeLayout mNavMenu;
     private int mLastScrollY;
     private int mLastIndex;
 
@@ -61,6 +86,23 @@ public class HomeActivity extends FragmentActivity {
 
     private int mScreenWidth;
 
+    /**
+     * drawerlayout
+     */
+    private DrawerLayout mDrawerLayout;
+    private RelativeLayout mLeftDrawer;
+
+    private LinearLayout mUserZone;
+    private SimpleDraweeView mMyAvatar;
+    private TextView mMyName;
+
+    private TextView mMenuHome;
+//    private TextView mMenuNew;
+    private TextView mMenuLiked;
+    private TextView mMenuBuckets;
+    private TextView mMenuAbout;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,10 +111,13 @@ public class HomeActivity extends FragmentActivity {
         initView();
         initPager();
         initTabIndicatorWidth();
+
+        getUserInfo();
     }
 
     private void initView() {
         mNavBar = (RelativeLayout) findViewById(R.id.nav);
+        mNavMenu = (RelativeLayout) findViewById(R.id.nav_menu);
 
 
         mNavBtnLeft = (RelativeLayout) findViewById(R.id.nav_btn_l);
@@ -85,6 +130,32 @@ public class HomeActivity extends FragmentActivity {
 
         mContentPager = (ViewPager) findViewById(R.id.home_content);
         mIndicator = findViewById(R.id.home_pager_indicator);
+
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mLeftDrawer = (RelativeLayout) findViewById(R.id.left_drawer);
+
+
+        mUserZone = (LinearLayout) findViewById(R.id.left_menu_user_zone);
+        mMyAvatar = (SimpleDraweeView) findViewById(R.id.left_menu_avatar_img);
+        mMyName = (TextView) findViewById(R.id.left_menu_name);
+
+        mMenuHome = (TextView) findViewById(R.id.left_menu_home);
+//        mMenuNew = (TextView) findViewById(R.id.left_menu_new);
+        mMenuLiked = (TextView) findViewById(R.id.left_menu_like);
+        mMenuBuckets = (TextView) findViewById(R.id.left_menu_buckets);
+        mMenuAbout = (TextView) findViewById(R.id.left_menu_about);
+
+
+
+        mNavMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mDrawerLayout.isDrawerOpen(mLeftDrawer)) {
+                    mDrawerLayout.openDrawer(mLeftDrawer);
+                }
+            }
+        });
     }
 
 
@@ -187,14 +258,32 @@ public class HomeActivity extends FragmentActivity {
             case 0:
                 mNavTextLeft.setTextColor(getResources().getColor(R.color.default_font));
                 mLeftFrag.onSelected();
+                mLeftFrag.setOnScrollListListener(new HomeFragment.OnScrollListListener() {
+                    @Override
+                    public void onListScroll(int scrollDisY) {
+                        transNavOnScroll(scrollDisY, 0);
+                    }
+                });
                 break;
             case 1:
                 mNavTextMid.setTextColor(getResources().getColor(R.color.default_font));
                 mMidFrag.onSelected();
+                mMidFrag.setOnScrollListListener(new HomeFragment.OnScrollListListener() {
+                    @Override
+                    public void onListScroll(int scrollDisY) {
+                        transNavOnScroll(scrollDisY, 1);
+                    }
+                });
                 break;
             case 2:
                 mNavTextRig.setTextColor(getResources().getColor(R.color.default_font));
                 mRigFrag.onSelected();
+                mMidFrag.setOnScrollListListener(new HomeFragment.OnScrollListListener() {
+                    @Override
+                    public void onListScroll(int scrollDisY) {
+                        transNavOnScroll(scrollDisY, 2);
+                    }
+                });
                 break;
         }
         mCurIndex = position;
@@ -233,6 +322,106 @@ public class HomeActivity extends FragmentActivity {
     public float getCurNavTrans() {
         return mCurNavTrans;
     }
+    public RelativeLayout getNav() {return mNavBar; }
+
+
+
+    private void getUserInfo() {
+        final String accessToken = AuthUtil.getAccessToken(this);
+
+        String url = DriRegInfo.REQUEST_MY_INFO;
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        parseMyInfo(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(HomeActivity.this, "errors", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<>();
+                params.put(DriRegInfo.REQUEST_HEAD_AUTH_FIELD, DriRegInfo.REQUEST_HEAD_BEAR + accessToken);
+                params.putAll(super.getHeaders());
+                return params;
+            }
+        };
+
+        request.setShouldCache(false);
+        request.setRetryPolicy(new DefaultRetryPolicy(20000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        NetworkHandler.getInstance(this).addToRequestQueue(request);
+    }
+
+    private void parseMyInfo(JSONObject data) {
+        final DribleUser user = new DribleUser(data);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(DriRegInfo.ACCOUNT_INFO_MEM, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(DriRegInfo.ACCOUNT_USER_ID, user.getId());
+        editor.commit();
+
+        if (!TextUtils.isEmpty(user.getAvatar_url())) {
+            Uri avatarUri = Uri.parse(user.getAvatar_url());
+            mMyAvatar.setImageURI(avatarUri);
+
+            mUserZone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mDrawerLayout.closeDrawer(mLeftDrawer);
+                    Intent intent = new Intent(HomeActivity.this, UserInfoActivity.class);
+                    intent.putExtra(UserInfoActivity.USER_ID_EXTRA, user.getId());
+                    startActivity(intent);
+                }
+            });
+
+            mMenuHome.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mDrawerLayout.closeDrawer(mLeftDrawer);
+                }
+            });
+//            mMenuNew.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    // to create a shot
+//                }
+//            });
+//            mMenuNew.setVisibility(View.INVISIBLE);
+            mMenuLiked.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(HomeActivity.this, "to like list", Toast.LENGTH_SHORT).show();
+                }
+            });
+            mMenuBuckets.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(HomeActivity.this, "to buckets list", Toast.LENGTH_SHORT).show();
+                }
+            });
+            mMenuAbout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(HomeActivity.this, "to about me page", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+
+        if (!TextUtils.isEmpty(user.getName())) {
+            mMyName.setText(user.getName());
+
+        }
+
+    }
+
+
 
 
 }

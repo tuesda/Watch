@@ -100,9 +100,14 @@ public class DribleShot implements Parcelable {
             images[0] = imageJson.getString(SHOT_IMAGES_HIDPI);
             images[1] = imageJson.getString(SHOT_IMAGES_NORMAL);
             images[2] = imageJson.getString(SHOT_IMAGES_TEASER);
+            for (int i=0; i<3; i++) {
+                if (images[i].equals("null")) {
+                    images[i] = null;
+                }
+            }
             views_count = data.getInt(SHOT_VIEWS_COUNT);
             likes_count = data.getInt(SHOT_LIKES_COUNT);
-            comments_count = data.getInt(SHOT_LIKES_COUNT);
+            comments_count = data.getInt(SHOT_COMMENTS_COUNT);
             attachments_count = data.getInt(SHOT_ATTACHMENTS_COUNT);
             rebounds_count = data.getInt(SHOT_REBOUNDS_COUNT);
             buckets_count = data.getInt(SHOT_BUCKETS_COUNT);
@@ -129,8 +134,10 @@ public class DribleShot implements Parcelable {
             for (int i=0; i<jsonArray.length(); i++) {
                 tags.add(jsonArray.getString(i));
             }
-            JSONObject userJson = data.getJSONObject(SHOT_USER);
-            user = new DribleUser(userJson);
+            if (data.has(SHOT_USER)) {
+                JSONObject userJson = data.getJSONObject(SHOT_USER);
+                user = new DribleUser(userJson);
+            }
             team = data.getString(SHOT_TEAM);
 
 
@@ -469,7 +476,10 @@ public class DribleShot implements Parcelable {
         projects_url = bundle.getString(SHOT_PROJECTS_URL);
         rebounds_url = bundle.getString(SHOT_REBOUNDS_URL);
         tags = bundle.getStringArrayList(SHOT_TAGS);
-        user = bundle.getParcelable(SHOT_USER);
+        int userId = bundle.getInt(SHOT_USER);
+        user = new DribleUser();
+        user.setId(userId);
+
         team = bundle.getString(SHOT_TEAM);
     }
 
@@ -507,7 +517,8 @@ public class DribleShot implements Parcelable {
         bundle.putString(SHOT_PROJECTS_URL, projects_url);
         bundle.putString(SHOT_REBOUNDS_URL, rebounds_url);
         bundle.putStringArrayList(SHOT_TAGS, tags);
-        bundle.putParcelable(SHOT_USER, user);
+        bundle.putInt(SHOT_USER, user.getId());
+
         bundle.putString(SHOT_TEAM, team);
         dest.writeBundle(bundle);
 

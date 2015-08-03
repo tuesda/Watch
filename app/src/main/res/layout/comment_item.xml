@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/layout_round_corner"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/comment_item_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-light"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="This is awsome"
+            android:textColor="@color/default_font"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/comment_item_avatar"
+                android:layout_width="@dimen/avatar_default_w_h"
+                android:layout_height="@dimen/avatar_default_w_h"
+                android:scaleType="centerCrop"
+                app:roundAsCircle="true" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/comment_item_avatar"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/comment_author_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Zhang Lei"
+                    android:textColor="@color/pretty_green"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/comment_created_at"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2015/08/01"
+                    android:textColor="@color/grey_text"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

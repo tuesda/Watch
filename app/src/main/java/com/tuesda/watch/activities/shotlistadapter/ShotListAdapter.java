@@ -1,6 +1,7 @@
 package com.tuesda.watch.activities.shotlistadapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.tuesda.watch.R;
+import com.tuesda.watch.activities.UserInfoActivity;
 import com.tuesda.watch.dribleSdk.data.DribleShot;
 
 import org.w3c.dom.Text;
@@ -73,7 +75,7 @@ public class ShotListAdapter extends BaseAdapter {
         } else {
             holder = (ShotViewHolder) convertView.getTag();
         }
-        DribleShot dribleShot = mDribleShots.get(position);
+        final DribleShot dribleShot = mDribleShots.get(position);
         if (dribleShot.getTags()!=null && dribleShot.getTags().size()>0 &&!TextUtils.isEmpty(dribleShot.getTags().get(0))) {
             holder.itemHeader.setText(dribleShot.getTags().get(0));
             holder.itemHeader.setVisibility(View.VISIBLE);
@@ -97,17 +99,19 @@ public class ShotListAdapter extends BaseAdapter {
         holder.itemCreate.setText(formatter.format(dribleShot.getCreated_at().getTime()));
         holder.itemLikesCount.setText("" + dribleShot.getLikes_count());
 
-        holder.itemHeader.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mContext, "will show list about this tag", Toast.LENGTH_LONG).show();
-            }
-        });
+//        holder.itemHeader.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(mContext, "will show list about this tag", Toast.LENGTH_LONG).show();
+//            }
+//        });
 
         holder.itemAuthor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "will to Author page", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(mContext, UserInfoActivity.class);
+                intent.putExtra(UserInfoActivity.USER_ID_EXTRA, dribleShot.getUser().getId());
+                mContext.startActivity(intent);
             }
         });
 

@@ -15,9 +15,12 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 
 import com.tuesda.watch.activities.HomeActivity;
+import com.tuesda.watch.activities.InputActivity;
 import com.tuesda.watch.activities.LoginActivity;
 import com.tuesda.watch.activities.OneShotInListActivity;
+import com.tuesda.watch.activities.ShotDetailActivity;
 import com.tuesda.watch.activities.UserInfoActivity;
+import com.tuesda.watch.activities.UsersActivity;
 import com.tuesda.watch.activities.WithActionBarActivity;
 import com.tuesda.watch.dribleSdk.DriRegInfo;
 
@@ -31,6 +34,9 @@ public class MainActivity extends Activity {
     private Button mGoAction;
     private Button mGoHome;
     private Button mGoOneShot;
+    private Button mGoShotDetail;
+    private Button mGoInput;
+    private Button mGoUsers;
 
 
 
@@ -44,6 +50,10 @@ public class MainActivity extends Activity {
         mGoAction = (Button) findViewById(R.id.to_action);
         mGoHome = (Button) findViewById(R.id.to_home);
         mGoOneShot = (Button) findViewById(R.id.to_one_shot);
+        mGoShotDetail = (Button) findViewById(R.id.to_shot_detail);
+        mGoInput = (Button) findViewById(R.id.to_input);
+        mGoUsers = (Button) findViewById(R.id.to_users);
+
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +93,29 @@ public class MainActivity extends Activity {
             }
         });
 
+        mGoShotDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ShotDetailActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mGoInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, InputActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mGoUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, UsersActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void clearSharedPref() {

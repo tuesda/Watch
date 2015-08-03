@@ -34,4 +34,44 @@
 
     <dimen name="nav_bottom_title_text">16sp</dimen>
 
+    <dimen name="shot_detail_avatar_w_h">40dp</dimen>
+    <dimen name="shot_detail_author_name_text">15sp</dimen>
+    <dimen name="shot_detail_author_length">130dp</dimen>
+
+    <dimen name="shot_detail_between">30dp</dimen>
+    <dimen name="shot_detail_between_short">15dp</dimen>
+    <dimen name="shot_detail_padding_left">30dp</dimen>
+    <dimen name="shot_detail_padding_right">30dp</dimen>
+    <dimen name="shot_detail_title_text">25sp</dimen>
+    <dimen name="shot_detail_description_text">18sp</dimen>
+    <dimen name="shot_detail_info_height">40dp</dimen>
+    <dimen name="shot_detail_info_left">5dp</dimen>
+
+    <dimen name="shot_detail_info_margin_b">10dp</dimen>
+    <dimen name="shot_detail_info_margin_r">30dp</dimen>
+
+    <dimen name="shot_detail_tag_zone_height">100dp</dimen>
+    <dimen name="shot_detail_tag_margin_t">10dp</dimen>
+
+    <dimen name="shot_detail_zone_padding_t_b">10dp</dimen>
+    <dimen name="shot_detail_tag_text_size">15sp</dimen>
+
+    <dimen name="shot_detail_zone_img_w_h">30dp</dimen>
+    <dimen name="shot_detail_comment_left">20dp</dimen>
+    <dimen name="shot_detail_zone_margin_t">5dp</dimen>
+
+    <dimen name="shot_detail_comment_item_margin_l_r">10dp</dimen>
+
+    <dimen name="avatar_default_w_h">35dp</dimen>
+
+    <dimen name="comments_list_foot_height">20dp</dimen>
+
+
+    <dimen name="left_menu_padding_left">30dp</dimen>
+    <dimen name="left_menu_avatar_w_h">100dp</dimen>
+    <dimen name="left_menu_avatar_zone_height">130dp</dimen>
+
+    <dimen name="user_info_avatar_w_h">100dp</dimen>
+
+
 </resources>

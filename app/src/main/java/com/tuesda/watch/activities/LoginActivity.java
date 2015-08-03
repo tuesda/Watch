@@ -41,12 +41,23 @@ public class LoginActivity extends Activity {
 
     RequestQueue mQueue;
 
+    private static boolean mStarted;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        initView();
-        setupWeb();
+        if (!mStarted) {
+            mStarted = true;
+            setContentView(R.layout.activity_login);
+            initView();
+            setupWeb();
+        } else {
+            finish();
+        }
+
+//        Log.e("into Login Activity!!!");
+
+
 
 
 
@@ -63,6 +74,7 @@ public class LoginActivity extends Activity {
         mNavBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mStarted = false;
                 finish();
             }
         });
@@ -115,6 +127,7 @@ public class LoginActivity extends Activity {
             Log.i(DriRegInfo.DRIBLE_LOGIN_URL);
         } else {
             Toast.makeText(LoginActivity.this, "code have already exists", Toast.LENGTH_LONG).show();
+            mStarted = false;
             finish();
         }
     }
@@ -153,6 +166,7 @@ public class LoginActivity extends Activity {
                         }
                         Toast.makeText(LoginActivity.this, "Authorization success", Toast.LENGTH_LONG).show();
 
+                        mStarted = false;
                         finish();
                     }
                 },
