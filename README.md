@@ -4,6 +4,10 @@ This is a project with custom client app on android for <https://dribbble.com>, 
 ##What you can do with this project?
 This is a simple example about how to set up a client for a website through OAuth. You can read the code and try to set up a client for another service by yourself. Hope this can help you :)
 
+##Apk
+You can download the apk at [this](app/app-release.apk)
+
+
 ##Demo
 ####User authorization####
 ![](animation/auth.gif)
@@ -17,6 +21,10 @@ This is a simple example about how to set up a client for a website through OAut
 ![](animation/following.gif)
 ####Drawer navigation
 ![](animation/drawer.gif)
+
+##Used library
+* [Fresco](https://github.com/facebook/fresco)
+* [Volley](https://github.com/mcxiaoke/android-volley)
 
 ##License
 MIT
