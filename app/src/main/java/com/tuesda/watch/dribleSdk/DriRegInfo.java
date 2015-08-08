@@ -8,10 +8,7 @@ import java.util.Random;
  */
 public class DriRegInfo {
 
-    public static final String DRIBLE_MEM = "com.tuesda.watch.drible.mem";
-    public static final String DRIBLE_TOKEN_FIELD = "com.tuesda.watch.dirbbble.token";
 
-    public static final String DRIBLE_CODE_FIELD = "com.tuesda.watch.dribbble.code";
 
     public static final String DRIBLE_AUTH_BASE = "https://dribbble.com/oauth/authorize";
     public static final String DRIBLE_TOKEN_URL = "https://dribbble.com/oauth/token";
@@ -84,8 +81,7 @@ public class DriRegInfo {
 
 
 
-    public static final String ACCOUNT_INFO_MEM = "com.tuesda.watch.account.mem";
-    public static final String ACCOUNT_USER_ID = "com.tuesda.watch.account.user.id";
+
 
 
     public static final String FOLLOWER_URL_FLAG = "followers";
@@ -93,6 +89,10 @@ public class DriRegInfo {
 
     public static final String FOLLOWER_JSON_FLAG = "follower";
     public static final String FOLLOWING_JSON_FLAG = "followee";
+
+    public static final String REQUEST_BUCKETS_URL = "https://api.dribbble.com/v1/buckets/";
+
+    public static final String DRIBLE_SEARCH_URL = "https://dribbble.com/search/";
 
 
 }

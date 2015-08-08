@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/content_back"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/about_line_1"
+        android:layout_centerInParent="true"
+        android:text="If you find any bugs ,"
+        android:textStyle="italic"
+        android:fontFamily="sans-serif-light"
+        android:textSize="16sp"
+        android:textColor="@color/default_font"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/about_line_2"
+        android:layout_below="@id/about_line_1"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/default_font"
+        android:text="Please feel free to send email to:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/about_line_3"
+        android:layout_below="@id/about_line_2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:inputType="textEmailAddress"
+        android:text="zhangleicoding@163.com"
+        android:textStyle="italic"
+        android:textSize="15sp"
+        android:textColor="@color/default_font"
+        android:fontFamily="sans-serif-light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/about_line_4"
+        android:layout_below="@id/about_line_3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text=": )"
+        android:textColor="@color/pretty_green"
+
+        android:textSize="18sp"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/about_title"
+        android:text="Thanks for use"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/about_line_1"
+        android:layout_marginBottom="30dp"
+        android:textColor="@color/default_font"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

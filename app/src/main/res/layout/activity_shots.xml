@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/shots_swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+        <ListView
+            android:id="@+id/shots_list"
+            android:background="@color/main_back"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/nav"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/toolbar_back">
+
+
+        <RelativeLayout
+            android:id="@+id/nav_back"
+            android:layout_width="@dimen/toolbar_height"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@drawable/btn_back"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="@dimen/nav_icon_w_h"
+                android:layout_height="@dimen/nav_icon_w_h"
+                android:layout_centerInParent="true"
+                android:src="@drawable/left_arrow" />
+        </RelativeLayout>
+
+
+
+        <TextView
+            android:id="@+id/shots_nav_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Shots"
+            android:textSize="20sp"
+            android:textColor="@color/default_font"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/nav_back"
+            android:maxWidth="200dp"
+            />
+
+
+
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/nav_bottom_divider" />
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/shots_progress"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

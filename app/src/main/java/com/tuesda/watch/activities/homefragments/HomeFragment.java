@@ -163,7 +163,6 @@ public class HomeFragment extends Fragment {
                         scrollHeight += -mList.getChildAt(0).getTop();
                     }
 
-
                     if (onScrollListListener != null && mCanScroll) {
                         onScrollListListener.onListScroll(scrollHeight - mLastScrollY);
                     }
@@ -207,11 +206,12 @@ public class HomeFragment extends Fragment {
 
 
 
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
+
+
 
     private OnScrollListListener onScrollListListener;
 
@@ -304,10 +304,12 @@ public class HomeFragment extends Fragment {
                 mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(getActivity(), ShotDetailActivity.class);
-                        intent.putExtra(ShotDetailActivity.SHOT_ID_EXTRA_FIELD, mShotList.get(position-1).getId());
-                        startActivity(intent);
-                        getActivity().overridePendingTransition(0, 0);
+                        if (position > 0) {
+                            Intent intent = new Intent(getActivity(), ShotDetailActivity.class);
+                            intent.putExtra(ShotDetailActivity.SHOT_ID_EXTRA_FIELD, mShotList.get(position-1).getId());
+                            startActivity(intent);
+                            getActivity().overridePendingTransition(0, 0);
+                        }
                     }
                 });
             }
@@ -351,6 +353,11 @@ public class HomeFragment extends Fragment {
         return url;
     }
 
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        onSelected();
+    }
 
     public void onSelected() {
         if (mList != null) {

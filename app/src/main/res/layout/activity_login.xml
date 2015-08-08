@@ -40,6 +40,16 @@
         android:layout_centerInParent="true"
         android:layout_width="@dimen/progress_w_h"
         android:layout_height="@dimen/progress_w_h" />
+    <TextView
+        android:id="@+id/login_fetch_user"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/pretty_red"
+        android:text="Loading user info..."
+        android:textStyle="italic"
+        android:textSize="16sp"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
 </RelativeLayout>

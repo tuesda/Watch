@@ -19,6 +19,7 @@
 
         <RelativeLayout
             android:id="@+id/nav"
+            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="@dimen/navbar_home_height"
             android:background="@color/toolbar_back">

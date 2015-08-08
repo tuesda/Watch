@@ -146,7 +146,7 @@ public class ShotDetailActivity extends Activity {
         mNavShare = (RelativeLayout) findViewById(R.id.nav_share);
         mNavLike = (RelativeLayout) findViewById(R.id.nav_like);
         mNavLikeImg = (ImageView) findViewById(R.id.nav_like_img);
-        mNavLikeImg.setVisibility(View.INVISIBLE);
+        mNavLike.setVisibility(View.INVISIBLE);
         mProgress = (RelativeLayout) findViewById(R.id.shot_progress);
 
         mCommentsList = (ListView) findViewById(R.id.shot_detail_comments_list);
@@ -208,7 +208,9 @@ public class ShotDetailActivity extends Activity {
 
     }
 
-    private void requestShot(String url) {
+    private int mLoadShotRetryCount = 5;
+
+    private void requestShot(final String url) {
         if (TextUtils.isEmpty(url)) {
             return;
         }
@@ -233,7 +235,13 @@ public class ShotDetailActivity extends Activity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(ShotDetailActivity.this, "Errors return", Toast.LENGTH_SHORT).show();
+                        if (mLoadShotRetryCount > 0) {
+                            mLoadShotRetryCount--;
+                            requestShot(url);
+                        } else {
+                            Toast.makeText(ShotDetailActivity.this, "network errors", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
                     }
                 }) {
             @Override
@@ -404,13 +412,13 @@ public class ShotDetailActivity extends Activity {
                     @Override
                     public void onResponse(JSONObject response) {
                         updateLikeView(true);
-                        mNavLikeImg.setVisibility(View.VISIBLE);
+                        mNavLike.setVisibility(View.VISIBLE);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 updateLikeView(false);
-                mNavLikeImg.setVisibility(View.VISIBLE);
+                mNavLike.setVisibility(View.VISIBLE);
             }
         }) {
             @Override

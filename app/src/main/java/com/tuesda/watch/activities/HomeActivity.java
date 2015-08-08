@@ -40,6 +40,7 @@ import com.tuesda.watch.dribleSdk.data.DribleUser;
 import com.tuesda.watch.httpnetwork.NetworkHandler;
 import com.tuesda.watch.log.Log;
 
+import org.apache.http.auth.AUTH;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
@@ -56,8 +57,7 @@ public class HomeActivity extends FragmentActivity {
 
     private RelativeLayout mNavBar;
     private RelativeLayout mNavMenu;
-    private int mLastScrollY;
-    private int mLastIndex;
+    private RelativeLayout mNavSearch;
 
     private float mCurNavTrans;
 
@@ -109,15 +109,17 @@ public class HomeActivity extends FragmentActivity {
         Fresco.initialize(this);
         setContentView(R.layout.activity_home);
         initView();
+
         initPager();
         initTabIndicatorWidth();
+        showUserInfo();
 
-        getUserInfo();
     }
 
     private void initView() {
         mNavBar = (RelativeLayout) findViewById(R.id.nav);
         mNavMenu = (RelativeLayout) findViewById(R.id.nav_menu);
+        mNavSearch = (RelativeLayout) findViewById(R.id.nav_search);
 
 
         mNavBtnLeft = (RelativeLayout) findViewById(R.id.nav_btn_l);
@@ -154,6 +156,15 @@ public class HomeActivity extends FragmentActivity {
                 if (!mDrawerLayout.isDrawerOpen(mLeftDrawer)) {
                     mDrawerLayout.openDrawer(mLeftDrawer);
                 }
+            }
+        });
+
+        mNavSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent searchIntent = new Intent(Intent.ACTION_VIEW);
+                searchIntent.setData(Uri.parse(DriRegInfo.DRIBLE_SEARCH_URL));
+                startActivity(searchIntent);
             }
         });
     }
@@ -226,6 +237,54 @@ public class HomeActivity extends FragmentActivity {
 
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mLeftFrag!=null && getSupportFragmentManager().findFragmentById(mLeftFrag.getId())!=null) {
+            getSupportFragmentManager().putFragment(outState, "left", mLeftFrag);
+        }
+        if (mMidFrag!=null && getSupportFragmentManager().findFragmentById(mMidFrag.getId())!=null) {
+            getSupportFragmentManager().putFragment(outState, "mid", mMidFrag);
+        }
+        if (mRigFrag!=null && getSupportFragmentManager().findFragmentById(mRigFrag.getId())!=null) {
+            getSupportFragmentManager().putFragment(outState, "right", mRigFrag);
+        }
+        outState.putFloat("navBarTranslation", mNavBar.getTranslationY());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (getSupportFragmentManager().getFragment(savedInstanceState, "left")!=null) {
+            mLeftFrag = (HomeFragment) getSupportFragmentManager().getFragment(savedInstanceState, "left");
+            mLeftFrag.setOnScrollListListener(new HomeFragment.OnScrollListListener() {
+                @Override
+                public void onListScroll(int scrollDisY) {
+                    transNavOnScroll(scrollDisY, 0);
+                }
+            });
+        }
+        if (getSupportFragmentManager().getFragment(savedInstanceState, "mid")!=null) {
+            mMidFrag = (HomeFragment) getSupportFragmentManager().getFragment(savedInstanceState, "mid");
+            mMidFrag.setOnScrollListListener(new HomeFragment.OnScrollListListener() {
+                @Override
+                public void onListScroll(int scrollDisY) {
+                    transNavOnScroll(scrollDisY, 1);
+                }
+            });
+        }
+        if (getSupportFragmentManager().getFragment(savedInstanceState, "right")!=null) {
+            mRigFrag = (HomeFragment) getSupportFragmentManager().getFragment(savedInstanceState, "right");
+            mRigFrag.setOnScrollListListener(new HomeFragment.OnScrollListListener() {
+                @Override
+                public void onListScroll(int scrollDisY) {
+                    transNavOnScroll(scrollDisY, 2);
+                }
+            });
+        }
+        mNavBar.setTranslationY(savedInstanceState.getFloat("navBarTranslation"));
+    }
+
     private void addTabClickListener() {
         mNavBtnLeft.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -278,7 +337,7 @@ public class HomeActivity extends FragmentActivity {
             case 2:
                 mNavTextRig.setTextColor(getResources().getColor(R.color.default_font));
                 mRigFrag.onSelected();
-                mMidFrag.setOnScrollListListener(new HomeFragment.OnScrollListListener() {
+                mRigFrag.setOnScrollListListener(new HomeFragment.OnScrollListListener() {
                     @Override
                     public void onListScroll(int scrollDisY) {
                         transNavOnScroll(scrollDisY, 2);
@@ -361,9 +420,9 @@ public class HomeActivity extends FragmentActivity {
     private void parseMyInfo(JSONObject data) {
         final DribleUser user = new DribleUser(data);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(DriRegInfo.ACCOUNT_INFO_MEM, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.ACCOUNT_INFO_MEM, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(DriRegInfo.ACCOUNT_USER_ID, user.getId());
+        editor.putInt(LoginActivity.ACCOUNT_USER_ID, user.getId());
         editor.commit();
 
         if (!TextUtils.isEmpty(user.getAvatar_url())) {
@@ -422,6 +481,83 @@ public class HomeActivity extends FragmentActivity {
     }
 
 
+    private void showUserInfo() {
+        final DribleUser user = AuthUtil.getMe(this);
+
+
+
+        if (user!=null && !TextUtils.isEmpty(user.getAvatar_url())) {
+            Uri avatarUri = Uri.parse(user.getAvatar_url());
+            mMyAvatar.setImageURI(avatarUri);
+
+            mUserZone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mDrawerLayout.closeDrawer(mLeftDrawer);
+                    Intent intent = new Intent(HomeActivity.this, UserInfoActivity.class);
+                    intent.putExtra(UserInfoActivity.USER_ID_EXTRA, user.getId());
+                    startActivity(intent);
+                }
+            });
+
+            mMenuHome.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mDrawerLayout.closeDrawer(mLeftDrawer);
+                }
+            });
+//            mMenuNew.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    // to create a shot
+//                }
+//            });
+//            mMenuNew.setVisibility(View.INVISIBLE);
+            mMenuLiked.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    Toast.makeText(HomeActivity.this, "to like list", Toast.LENGTH_SHORT).show();
+                    mDrawerLayout.closeDrawer(mLeftDrawer);
+                    SharedPreferences shared = getSharedPreferences(LoginActivity.ACCOUNT_INFO_MEM, Context.MODE_PRIVATE);
+                    String like_url = shared.getString(LoginActivity.ACCOUNT_USER_LIKE_URL, null);
+                    Intent intent = new Intent(HomeActivity.this, ShotsActivity.class);
+                    intent.putExtra(ShotsActivity.SHOTS_URL, like_url);
+                    intent.putExtra(ShotsActivity.SHOTS_TITLE_EXTRA, "My liked");
+                    intent.putExtra(ShotsActivity.CALL_FROM, "like");
+                    startActivity(intent);
+                }
+            });
+            mMenuBuckets.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    Toast.makeText(HomeActivity.this, "to buckets list", Toast.LENGTH_SHORT).show();
+                    mDrawerLayout.closeDrawer(mLeftDrawer);
+                    SharedPreferences shared = getSharedPreferences(LoginActivity.ACCOUNT_INFO_MEM, Context.MODE_PRIVATE);
+                    String buckets_url = shared.getString(LoginActivity.ACCOUNT_USER_BUCKETS_URL, null);
+                    Intent intent = new Intent(HomeActivity.this, BucketsActivity.class);
+                    intent.putExtra(BucketsActivity.BUCKET_URL, buckets_url);
+                    intent.putExtra(BucketsActivity.BUCKET_TITLE, "My buckets");
+                    startActivity(intent);
+                }
+            });
+            mMenuAbout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    Toast.makeText(HomeActivity.this, "to about me page", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(HomeActivity.this, AboutActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+        }
+
+        if (user!=null && !TextUtils.isEmpty(user.getName())) {
+            mMyName.setText(user.getName());
+
+        }
+
+
+    }
 
 
 }

@@ -114,7 +114,7 @@ public class UserInfoActivity extends Activity {
         initView();
 
         requestUserInfo();
-        if (AuthUtil.getMyId(this)!=mUserId) {
+        if (AuthUtil.getMe(this).getId()!=mUserId) {
             checkIfFollowing();
         }
     }
@@ -148,7 +148,7 @@ public class UserInfoActivity extends Activity {
         AbsListView.LayoutParams footParams = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200);
         mFooter.setLayoutParams(footParams);
         mList.addFooterView(mFooter);
-        if (AuthUtil.getMyId(this) != mUserId) {
+        if (AuthUtil.getMe(this).getId() != mUserId) {
             mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

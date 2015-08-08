@@ -22,6 +22,7 @@ import com.tuesda.watch.activities.ShotDetailActivity;
 import com.tuesda.watch.activities.UserInfoActivity;
 import com.tuesda.watch.activities.UsersActivity;
 import com.tuesda.watch.activities.WithActionBarActivity;
+import com.tuesda.watch.dribleSdk.AuthUtil;
 import com.tuesda.watch.dribleSdk.DriRegInfo;
 
 import java.io.UnsupportedEncodingException;
@@ -44,7 +45,13 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AuthUtil.checkIfLogin(this);
+
+
+
         setContentView(R.layout.activity_main);
+
         mLoginBtn = (Button) findViewById(R.id.btn_login);
         mGetUser = (Button) findViewById(R.id.get_user);
         mGoAction = (Button) findViewById(R.id.to_action);
@@ -81,6 +88,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -118,13 +126,6 @@ public class MainActivity extends Activity {
         });
     }
 
-    private void clearSharedPref() {
-        SharedPreferences sharedPreferences = getSharedPreferences(DriRegInfo.DRIBLE_MEM, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(DriRegInfo.DRIBLE_CODE_FIELD, "");
-        editor.putString(DriRegInfo.DRIBLE_TOKEN_FIELD, "");
-        editor.commit();
-    }
 
 
 
@@ -149,5 +150,10 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void overridePendingTransition(int enterAnim, int exitAnim) {
+        super.overridePendingTransition(0, 0);
     }
 }

@@ -162,8 +162,8 @@ public class OneShotInListActivity extends Activity {
     }
 
     private void checkAuth() {
-        SharedPreferences sharedPreferences = getSharedPreferences(DriRegInfo.DRIBLE_MEM, Context.MODE_PRIVATE);
-        mAccess_token = sharedPreferences.getString(DriRegInfo.DRIBLE_TOKEN_FIELD, null);
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.DRIBLE_MEM, Context.MODE_PRIVATE);
+        mAccess_token = sharedPreferences.getString(LoginActivity.DRIBLE_TOKEN_FIELD, null);
         if (TextUtils.isEmpty(mAccess_token)) {
             Intent intent = new Intent(OneShotInListActivity.this, LoginActivity.class);
             startActivity(intent);
