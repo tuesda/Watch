@@ -253,7 +253,7 @@ public class LoginActivity extends Activity {
             }
         };
 
-        NetworkHandler.getInstance(this).addToRequestQueue(request);
+        NetworkHandler.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
 
     private void parseInfo(JSONObject json) {

@@ -212,7 +212,7 @@ public class ShotsActivity extends Activity {
             }
         };
 
-        NetworkHandler.getInstance(this).addToRequestQueue(request);
+        NetworkHandler.getInstance(getApplicationContext()).addToRequestQueue(request);
 
     }
 

@@ -187,7 +187,7 @@ public class UsersActivity extends Activity {
 
         request.setShouldCache(false);
         request.setRetryPolicy(new DefaultRetryPolicy(20000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        NetworkHandler.getInstance(this).addToRequestQueue(request);
+        NetworkHandler.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
 
     private void parseUsers(JSONArray jsonArray) {

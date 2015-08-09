@@ -279,7 +279,7 @@ public class UserInfoActivity extends Activity {
 
         request.setShouldCache(false);
         request.setRetryPolicy(new DefaultRetryPolicy(10000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        NetworkHandler.getInstance(this).addToRequestQueue(request);
+        NetworkHandler.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
 
     private void parseUserInfo(JSONObject response) {
@@ -397,7 +397,7 @@ public class UserInfoActivity extends Activity {
 
         request.setShouldCache(false);
         request.setRetryPolicy(new DefaultRetryPolicy(10000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        NetworkHandler.getInstance(this).addToRequestQueue(request);
+        NetworkHandler.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
 
 
@@ -473,7 +473,7 @@ public class UserInfoActivity extends Activity {
 
         request.setShouldCache(false);
         request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        NetworkHandler.getInstance(this).addToRequestQueue(request);
+        NetworkHandler.getInstance(getApplicationContext()).addToRequestQueue(request);
         mCanChangeFollow = false;
 
     }
@@ -517,7 +517,7 @@ public class UserInfoActivity extends Activity {
         request.setShouldCache(false);
         request.setRetryPolicy(new DefaultRetryPolicy(20000, RETRY_COUNT, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        NetworkHandler.getInstance(this).addToRequestQueue(request);
+        NetworkHandler.getInstance(getApplicationContext()).addToRequestQueue(request);
 
         new Handler().postDelayed(new Runnable() {
             @Override

@@ -136,7 +136,7 @@ public class OneShotInListActivity extends Activity {
             }
         });
 
-        NetworkHandler.getInstance(this).addToRequestQueue(request);
+        NetworkHandler.getInstance(getApplicationContext()).addToRequestQueue(request);
 
 
     }

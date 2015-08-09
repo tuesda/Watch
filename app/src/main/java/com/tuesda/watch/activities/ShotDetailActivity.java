@@ -263,7 +263,7 @@ public class ShotDetailActivity extends Activity {
         request.setRetryPolicy(new DefaultRetryPolicy(10000, RETRY_COUNT, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         request.setShouldCache(false);
 
-        NetworkHandler.getInstance(this).addToRequestQueue(request);
+        NetworkHandler.getInstance(getApplicationContext()).addToRequestQueue(request);
 
     }
 
@@ -433,7 +433,7 @@ public class ShotDetailActivity extends Activity {
         };
 
         request.setShouldCache(false);
-        NetworkHandler.getInstance(this).addToRequestQueue(request);
+        NetworkHandler.getInstance(getApplicationContext()).addToRequestQueue(request);
 
 
     }
@@ -474,7 +474,7 @@ public class ShotDetailActivity extends Activity {
         };
 
         request.setShouldCache(false);
-        NetworkHandler.getInstance(this).addToRequestQueue(request);
+        NetworkHandler.getInstance(getApplicationContext()).addToRequestQueue(request);
         mCanChangeLike = false;
 
 
@@ -524,7 +524,7 @@ public class ShotDetailActivity extends Activity {
 
         request.setShouldCache(false);
         request.setRetryPolicy(new DefaultRetryPolicy(10000, RETRY_COUNT, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        NetworkHandler.getInstance(this).addToRequestQueue(request);
+        NetworkHandler.getInstance(getApplicationContext()).addToRequestQueue(request);
 
     }
 

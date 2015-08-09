@@ -1,5 +1,6 @@
 package com.tuesda.watch.activities.homefragments;
 
+import android.app.Application;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -276,7 +277,7 @@ public class HomeFragment extends Fragment {
         request.setRetryPolicy(new DefaultRetryPolicy(10000, RETRY_COUNT, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         request.setShouldCache(false);
-        NetworkHandler.getInstance(getActivity()).addToRequestQueue(request);
+        NetworkHandler.getInstance(getActivity().getApplicationContext()).addToRequestQueue(request);
 
         if (!isFirst) {
             mFootProgress.setVisibility(View.VISIBLE);

@@ -152,7 +152,7 @@ public class BucketsActivity extends Activity {
             }
         };
 
-        NetworkHandler.getInstance(this).addToRequestQueue(request);
+        NetworkHandler.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
 
     private void parseBuckets(JSONArray jsonArray) {
