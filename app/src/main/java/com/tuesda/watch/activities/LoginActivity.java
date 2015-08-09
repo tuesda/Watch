@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.HandlerThread;
-import android.os.SystemClock;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -67,40 +65,21 @@ public class LoginActivity extends Activity {
 
     RequestQueue mQueue;
 
-    private static boolean mStarted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         Log.e("into login");
         super.onCreate(savedInstanceState);
-        if (!mStarted) {
-            mStarted = true;
             setContentView(R.layout.activity_login);
-            checkIfLogin();
 
 
             initView();
             setupWeb();
-        } else {
-            finish();
-        }
 
     }
 
-    private void checkIfLogin() {
-        SharedPreferences sharedPreferences = getSharedPreferences(DRIBLE_MEM, Context.MODE_PRIVATE);
-        String access = sharedPreferences.getString(DRIBLE_TOKEN_FIELD, null);
-        if (!TextUtils.isEmpty(access)) {
-            goHome();
-        }
-    }
 
-    private void goHome() {
-
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-    }
 
 
     private void initView() {
@@ -114,7 +93,6 @@ public class LoginActivity extends Activity {
         mNavBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mStarted = false;
                 finish();
             }
         });
@@ -127,7 +105,7 @@ public class LoginActivity extends Activity {
 
         String accessToken = mDribleShare.getString(DRIBLE_TOKEN_FIELD, null);
 
-        if (TextUtils.isEmpty(accessToken)) {
+//        if (TextUtils.isEmpty(accessToken)) {
             if (Log.DBG) {
                 Log.e("Login: accessToken is null, need authorization");
             }
@@ -165,12 +143,12 @@ public class LoginActivity extends Activity {
 
             mLoginWeb.loadUrl(DriRegInfo.DRIBLE_LOGIN_URL);
             Log.i(DriRegInfo.DRIBLE_LOGIN_URL);
-        } else {
-            if (Log.DBG) {
-                Toast.makeText(LoginActivity.this, "already login", Toast.LENGTH_SHORT).show();
-            }
-            onCompleteAuth();
-        }
+//        } else {
+//            if (Log.DBG) {
+//                Toast.makeText(LoginActivity.this, "already login", Toast.LENGTH_SHORT).show();
+//            }
+//            onCompleteAuth();
+//        }
     }
 
     private String getCodeFromUrl(String url) {
@@ -225,20 +203,18 @@ public class LoginActivity extends Activity {
 
     private void onCompleteAuth() {
 
-        mStarted = false;
-        if (AuthUtil.hasUserInfo(this)) {
-            goHome();
-        } else {
+//        if (AuthUtil.hasUserInfo(this)) {
+//            AuthUtil.goHome(this);
+//        } else {
             fetchUserInfo();
             mLoading.setVisibility(View.VISIBLE);
-        }
+//        }
     }
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mStarted = false;
     }
 
     private int count = 10;
@@ -262,6 +238,9 @@ public class LoginActivity extends Activity {
                 if (count > 0) {
                     count--;
                     fetchUserInfo();
+                } else {
+                    mLoading.setVisibility(View.INVISIBLE);
+                    Toast.makeText(LoginActivity.this, "Please try again!", Toast.LENGTH_SHORT).show();
                 }
             }
         }) {
@@ -288,7 +267,7 @@ public class LoginActivity extends Activity {
         editor.putString(ACCOUNT_USER_BUCKETS_URL, me.getBuckets_url());
         editor.commit();
 
-        goHome();
+        AuthUtil.goHome(this);
     }
 
 

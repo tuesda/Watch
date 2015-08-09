@@ -385,100 +385,100 @@ public class HomeActivity extends FragmentActivity {
 
 
 
-    private void getUserInfo() {
-        final String accessToken = AuthUtil.getAccessToken(this);
+//    private void getUserInfo() {
+//        final String accessToken = AuthUtil.getAccessToken(this);
+//
+//        String url = DriRegInfo.REQUEST_MY_INFO;
+//
+//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        parseMyInfo(response);
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(HomeActivity.this, "errors", Toast.LENGTH_SHORT).show();
+//            }
+//        }) {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                HashMap<String, String> params = new HashMap<>();
+//                params.put(DriRegInfo.REQUEST_HEAD_AUTH_FIELD, DriRegInfo.REQUEST_HEAD_BEAR + accessToken);
+//                params.putAll(super.getHeaders());
+//                return params;
+//            }
+//        };
+//
+//        request.setShouldCache(false);
+//        request.setRetryPolicy(new DefaultRetryPolicy(20000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+//
+//        NetworkHandler.getInstance(this).addToRequestQueue(request);
+//    }
 
-        String url = DriRegInfo.REQUEST_MY_INFO;
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        parseMyInfo(response);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(HomeActivity.this, "errors", Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> params = new HashMap<>();
-                params.put(DriRegInfo.REQUEST_HEAD_AUTH_FIELD, DriRegInfo.REQUEST_HEAD_BEAR + accessToken);
-                params.putAll(super.getHeaders());
-                return params;
-            }
-        };
-
-        request.setShouldCache(false);
-        request.setRetryPolicy(new DefaultRetryPolicy(20000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-        NetworkHandler.getInstance(this).addToRequestQueue(request);
-    }
-
-    private void parseMyInfo(JSONObject data) {
-        final DribleUser user = new DribleUser(data);
-
-        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.ACCOUNT_INFO_MEM, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(LoginActivity.ACCOUNT_USER_ID, user.getId());
-        editor.commit();
-
-        if (!TextUtils.isEmpty(user.getAvatar_url())) {
-            Uri avatarUri = Uri.parse(user.getAvatar_url());
-            mMyAvatar.setImageURI(avatarUri);
-
-            mUserZone.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mDrawerLayout.closeDrawer(mLeftDrawer);
-                    Intent intent = new Intent(HomeActivity.this, UserInfoActivity.class);
-                    intent.putExtra(UserInfoActivity.USER_ID_EXTRA, user.getId());
-                    startActivity(intent);
-                }
-            });
-
-            mMenuHome.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mDrawerLayout.closeDrawer(mLeftDrawer);
-                }
-            });
-//            mMenuNew.setOnClickListener(new View.OnClickListener() {
+//    private void parseMyInfo(JSONObject data) {
+//        final DribleUser user = new DribleUser(data);
+//
+//        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.ACCOUNT_INFO_MEM, Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putInt(LoginActivity.ACCOUNT_USER_ID, user.getId());
+//        editor.commit();
+//
+//        if (!TextUtils.isEmpty(user.getAvatar_url())) {
+//            Uri avatarUri = Uri.parse(user.getAvatar_url());
+//            mMyAvatar.setImageURI(avatarUri);
+//
+//            mUserZone.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
-//                    // to create a shot
+//                    mDrawerLayout.closeDrawer(mLeftDrawer);
+//                    Intent intent = new Intent(HomeActivity.this, UserInfoActivity.class);
+//                    intent.putExtra(UserInfoActivity.USER_ID_EXTRA, user.getId());
+//                    startActivity(intent);
 //                }
 //            });
-//            mMenuNew.setVisibility(View.INVISIBLE);
-            mMenuLiked.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(HomeActivity.this, "to like list", Toast.LENGTH_SHORT).show();
-                }
-            });
-            mMenuBuckets.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(HomeActivity.this, "to buckets list", Toast.LENGTH_SHORT).show();
-                }
-            });
-            mMenuAbout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(HomeActivity.this, "to about me page", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        }
-
-        if (!TextUtils.isEmpty(user.getName())) {
-            mMyName.setText(user.getName());
-
-        }
-
-    }
+//
+//            mMenuHome.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    mDrawerLayout.closeDrawer(mLeftDrawer);
+//                }
+//            });
+////            mMenuNew.setOnClickListener(new View.OnClickListener() {
+////                @Override
+////                public void onClick(View v) {
+////                    // to create a shot
+////                }
+////            });
+////            mMenuNew.setVisibility(View.INVISIBLE);
+//            mMenuLiked.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Toast.makeText(HomeActivity.this, "to like list", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//            mMenuBuckets.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Toast.makeText(HomeActivity.this, "to buckets list", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//            mMenuAbout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Toast.makeText(HomeActivity.this, "to about me page", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//
+//        }
+//
+//        if (!TextUtils.isEmpty(user.getName())) {
+//            mMyName.setText(user.getName());
+//
+//        }
+//
+//    }
 
 
     private void showUserInfo() {

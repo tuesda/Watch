@@ -21,7 +21,6 @@ public class AuthUtil {
         String access_token = sharedPreferences.getString(LoginActivity.DRIBLE_TOKEN_FIELD, null);
         if (TextUtils.isEmpty(access_token)) {
             Intent intent = new Intent(context, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             context.startActivity(intent);
         }
         return access_token;
@@ -32,8 +31,8 @@ public class AuthUtil {
         int id = sharedPreferences.getInt(LoginActivity.ACCOUNT_USER_ID, -1);
 
         if (id == -1) {
+            clearAuthInfo(context);
             Intent intent = new Intent(context, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             context.startActivity(intent);
             return null;
         }
@@ -77,6 +76,18 @@ public class AuthUtil {
         int id = shared.getInt(LoginActivity.ACCOUNT_USER_ID, -1);
         return id != -1;
 
+    }
+
+    private static void clearAuthInfo(Context context) {
+        SharedPreferences shared = context.getSharedPreferences(LoginActivity.DRIBLE_MEM, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = shared.edit();
+        editor.clear();
+        editor.commit();
+
+        SharedPreferences sharedAccount = context.getSharedPreferences(LoginActivity.ACCOUNT_INFO_MEM, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editorAcc = sharedAccount.edit();
+        editorAcc.clear();
+        editorAcc.commit();
     }
 
 }
