@@ -105,7 +105,7 @@ public class LoginActivity extends Activity {
 
         String accessToken = mDribleShare.getString(DRIBLE_TOKEN_FIELD, null);
 
-//        if (TextUtils.isEmpty(accessToken)) {
+        if (TextUtils.isEmpty(accessToken)) {
             if (Log.DBG) {
                 Log.e("Login: accessToken is null, need authorization");
             }
@@ -143,12 +143,12 @@ public class LoginActivity extends Activity {
 
             mLoginWeb.loadUrl(DriRegInfo.DRIBLE_LOGIN_URL);
             Log.i(DriRegInfo.DRIBLE_LOGIN_URL);
-//        } else {
+        } else {
 //            if (Log.DBG) {
 //                Toast.makeText(LoginActivity.this, "already login", Toast.LENGTH_SHORT).show();
 //            }
-//            onCompleteAuth();
-//        }
+            onCompleteAuth();
+        }
     }
 
     private String getCodeFromUrl(String url) {
@@ -217,7 +217,7 @@ public class LoginActivity extends Activity {
         super.onDestroy();
     }
 
-    private int count = 10;
+    private int count = 30;
 
     private void fetchUserInfo() {
         final String accessToken = AuthUtil.getAccessToken(this);
@@ -240,7 +240,7 @@ public class LoginActivity extends Activity {
                     fetchUserInfo();
                 } else {
                     mLoading.setVisibility(View.INVISIBLE);
-                    Toast.makeText(LoginActivity.this, "Please try again!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Please exit app and try again!", Toast.LENGTH_SHORT).show();
                 }
             }
         }) {

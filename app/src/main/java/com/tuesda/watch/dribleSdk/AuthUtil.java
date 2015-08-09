@@ -31,9 +31,12 @@ public class AuthUtil {
         int id = sharedPreferences.getInt(LoginActivity.ACCOUNT_USER_ID, -1);
 
         if (id == -1) {
-            clearAuthInfo(context);
             Intent intent = new Intent(context, LoginActivity.class);
+            ((Activity) context).finish();
+            ((Activity) context).overridePendingTransition(0, 0);
+
             context.startActivity(intent);
+
             return null;
         }
 
