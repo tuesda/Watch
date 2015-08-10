@@ -124,9 +124,7 @@ public class ShotsActivity extends Activity {
 
         mList = (ListView) findViewById(R.id.shots_list);
 
-        mShotsAdapter = new ShotListAdapter(this, mShots);
-        mList.setAdapter(mShotsAdapter);
-        mList.setDivider(null);
+
 
         mHeader = new View(this);
         AbsListView.LayoutParams params = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -142,6 +140,11 @@ public class ShotsActivity extends Activity {
 
         mProgress = (ProgressBar) findViewById(R.id.shots_progress);
         mProgress.setVisibility(View.VISIBLE);
+
+        mShotsAdapter = new ShotListAdapter(this, mShots);
+        mList.setAdapter(mShotsAdapter);
+        mList.setDivider(null);
+
 
         mList.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override

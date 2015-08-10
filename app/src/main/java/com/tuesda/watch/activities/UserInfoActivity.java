@@ -137,8 +137,7 @@ public class UserInfoActivity extends Activity {
 
         mSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.user_info_swipe);
         mList = (ListView) findViewById(R.id.user_info_list);
-        mShotAdapter = new ShotListAdapter(this, mShots);
-        mList.setAdapter(mShotAdapter);
+
         mHeader = (RelativeLayout) mInflater.inflate(R.layout.user_info_header, mList, false);
         mList.addHeaderView(mHeader);
         mList.setDivider(null);
@@ -148,6 +147,10 @@ public class UserInfoActivity extends Activity {
         AbsListView.LayoutParams footParams = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200);
         mFooter.setLayoutParams(footParams);
         mList.addFooterView(mFooter);
+
+        mShotAdapter = new ShotListAdapter(this, mShots);
+        mList.setAdapter(mShotAdapter);
+
         if (AuthUtil.getMe(this).getId() != mUserId) {
             mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

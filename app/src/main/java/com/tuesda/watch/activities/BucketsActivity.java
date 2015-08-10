@@ -87,15 +87,19 @@ public class BucketsActivity extends Activity {
         });
 
         mList = (ListView) findViewById(R.id.buckets_list);
-        mBucketsAdapter = new BucketListAdapter(this, mBuckets);
-        mList.setAdapter(mBucketsAdapter);
-        mList.setDivider(null);
 
         mHeader = new View(this);
         AbsListView.LayoutParams headParam = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 (int) getResources().getDimension(R.dimen.toolbar_height));
         mHeader.setLayoutParams(headParam);
         mList.addHeaderView(mHeader);
+
+
+        mBucketsAdapter = new BucketListAdapter(this, mBuckets);
+        mList.setAdapter(mBucketsAdapter);
+        mList.setDivider(null);
+
+
 
         mTitle = (TextView) findViewById(R.id.buckets_nav_title);
         mTitle.setText(mTitleTxt);

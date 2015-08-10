@@ -182,14 +182,17 @@ public class ShotDetailActivity extends Activity {
         mShotBucketImg.setColorFilter(getResources().getColor(R.color.grey_text));
 
         mCommentsList.addHeaderView(mCommentsHeader);
-        mCommentAdapter = new CommentAdapter(this, mComments);
-        mCommentsList.setAdapter(mCommentAdapter);
-        mCommentsList.setDivider(null);
+
         View footer = new View(this);
         AbsListView.LayoutParams footParams = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 (int) getResources().getDimension(R.dimen.comments_list_foot_height));
         footer.setLayoutParams(footParams);
         mCommentsList.addFooterView(footer);
+
+        mCommentAdapter = new CommentAdapter(this, mComments);
+        mCommentsList.setAdapter(mCommentAdapter);
+        mCommentsList.setDivider(null);
+
 
 
         mNavBack.setOnClickListener(new View.OnClickListener() {

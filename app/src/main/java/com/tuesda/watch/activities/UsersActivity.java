@@ -85,15 +85,12 @@ public class UsersActivity extends Activity {
 
         mProgress = (ProgressBar) findViewById(R.id.users_progress);
 
-        mUsersAdapter = new UserListAdapter(this, mUsers);
-        mList.setAdapter(mUsersAdapter);
-        mList.setDivider(null);
-
         mHeader = new View(this);
         AbsListView.LayoutParams headParams = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 (int) (getResources().getDimension(R.dimen.toolbar_height)));
         mHeader.setLayoutParams(headParams);
         mList.addHeaderView(mHeader);
+
 
         mFooter = (RelativeLayout) mInflater.inflate(R.layout.users_foot, mList, false);
         mShowMore = (TextView) mFooter.findViewById(R.id.foot_load_more);
@@ -101,6 +98,12 @@ public class UsersActivity extends Activity {
         mFootProgress = (ProgressBar) mFooter.findViewById(R.id.footer_progress);
 
         mList.addFooterView(mFooter);
+
+
+        mUsersAdapter = new UserListAdapter(this, mUsers);
+        mList.setAdapter(mUsersAdapter);
+        mList.setDivider(null);
+
 
         mNavBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +131,7 @@ public class UsersActivity extends Activity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (!mList.canScrollVertically(1) && firstVisibleItem>0 && mRelatedLinks.containsKey("next")) {
+                if (!mList.canScrollVertically(1) && firstVisibleItem > 0 && mRelatedLinks.containsKey("next")) {
                     mShowMore.setVisibility(View.VISIBLE);
                     mFooter.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -176,7 +179,7 @@ public class UsersActivity extends Activity {
                 if (response.headers != null && Log.DBG) {
 //                    Log.e("response: " + response.headers);
                 }
-                if (response.headers!=null && response.headers.containsKey(DriRegInfo.RESPONSE_HEADER_LINK)) {
+                if (response.headers != null && response.headers.containsKey(DriRegInfo.RESPONSE_HEADER_LINK)) {
                     mRelatedLinks = HttpUtils.genNextUrl(response.headers.get(DriRegInfo.RESPONSE_HEADER_LINK));
                 } else {
                     mRelatedLinks.clear();
@@ -197,13 +200,13 @@ public class UsersActivity extends Activity {
         }
 
         try {
-            for (int i=0; i<jsonArray.length(); i++) {
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject json = (JSONObject) jsonArray.get(i);
                 String flag = Uri.parse(mUrl).getLastPathSegment();
 //                Log.e("last str: " + flag);
                 DribleUser user = new DribleUser();
                 if (flag.equals(DriRegInfo.FOLLOWER_URL_FLAG)) {
-                    user = new DribleUser((JSONObject)json.get(DriRegInfo.FOLLOWER_JSON_FLAG));
+                    user = new DribleUser((JSONObject) json.get(DriRegInfo.FOLLOWER_JSON_FLAG));
                 } else if (flag.equals(DriRegInfo.FOLLOWING_URL_FLAG)) {
                     user = new DribleUser((JSONObject) json.get(DriRegInfo.FOLLOWING_JSON_FLAG));
                 }
